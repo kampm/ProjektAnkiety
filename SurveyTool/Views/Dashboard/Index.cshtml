@@ -28,12 +28,12 @@
 }
 
 <div class="page-header">
-    <h2>Surveys <small>Take surveys and view history</small></h2>
+    <h2>Ankiety <small>Take surveys and view history</small></h2>
 </div>
 
 <ul id="tabs" class="nav nav-tabs">
-    <li><a class="active" href="#take-survey" data-toggle="tab"><i class="icon-list-alt"></i> Surveys</a></li>
-    <li><a href="#history" data-toggle="tab"><i class="icon-time"></i> History</a></li>
+    <li><a class="active" href="#take-survey" data-toggle="tab"><i class="icon-list-alt"></i> Ankiety</a></li>
+    <li><a href="#history" data-toggle="tab"><i class="icon-time"></i> Historia</a></li>
 </ul>
 
 <div class="tab-content">
@@ -59,7 +59,7 @@
                     @if (survey.IsActive)
                     {
                         <a class="btn" href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">
-                            Start Survey <i class="icon-arrow-right"></i>
+                            Odpowiedz na ankiete <i class="icon-arrow-right"></i>
                         </a>
                     }
                     else
@@ -71,18 +71,18 @@
             <div class="row">
                 <div class="span4 text-left">
                     <span class="@(survey.IsActive ? "" : "muted")">
-                        @survey.Questions.Count() Questions
+                        Pytania: @survey.Questions.Count()
                     </span>
                 </div>
                 <div class="span4 text-center">
                     <span class="@(survey.IsActive ? "" : "muted")">
-                        Active: @survey.StartDate.ToString("d")
-                        to @survey.EndDate.ToString("d")
+                        Aktywne: @survey.StartDate.ToString("d")
+                        do @survey.EndDate.ToString("d")
                     </span>
                 </div>
                 <div class="span4 text-right">
                     <span class="@(survey.IsActive ? "" : "muted")">
-                        Your Latest Response: 
+                        Ostatnia odpowiedz: 
                         @(survey.Responses.Select(x => x.CreatedOn.ToString("d")).FirstOrDefault() ?? "Never")
                     </span>
                 </div>

@@ -22,12 +22,19 @@ namespace SurveyTool.Models
 
         public int GetQuestionCount()
         {
-            return Answers == null ? 0 : Answers.Count();
+            return Survey.Questions.Count();
+            //return Answers.Count();
         }
 
         public int GetAnswerCount()
         {
-            return Answers == null ? 0 : Answers.Sum(x => x.Score);
+
+            return Answers == null ? 0 : Answers.Sum(x =>
+            (
+             x.Score >= 1 ? 1 : 0
+
+            ));
+
         }
 
         public double CalculateScore()

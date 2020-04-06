@@ -9,29 +9,78 @@
     @Scripts.Render("~/bundles/models")
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             ko.applyBindings(new SurveyListModel(), $('#survey-list')[0]);
         })
     </script>
 }
 
 <div class="page-header">
-    <a class="btn btn-success pull-right" href="@Url.Action("Create")">
-        <i class="icon-plus"></i> New Survey
-    </a>
-    <h2>Surveys <small>Add or manage surveys</small></h2>
+    @*<a class="btn btn-success pull-right" href="@Url.Action("Create")">
+            <i class="icon-plus"></i> Nowa ankieta
+        </a>*@
+    <h2>Ankiety <small>Dodaj lub edytuj ankiety</small></h2>
 </div>
+<div class="container-fluid">
+    <div class="row d-inline-flex">
+        <div class="col-6  col-lg-3 col-sm-4 col-md-4 p-2">
+            <div class="card" style="min-width: 150px; min-height: 150px">
+                <a class="card text-white " href="@Url.Action("Create")" style="background-color:forestgreen;min-height: 150px">
 
+                    <h3 class="card-title">Dodaj nową ankiete</h3>
+
+                </a>
+            </div>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="col-6  col-lg-3 col-sm-4 col-md-4 p-2">
+                <div class="card" style="min-width: 130px">
+                    <h3 class="card-title">@item.Name </h3>
+                    <h4 class="card-subtitle">@Html.DisplayFor(x => item.IsActive, "IsActive")</h4>
+                    <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-wrench"></i><span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="@Url.Action("Edit", new {id = item.Id})">
+                                <i class="icon-pencil"></i> Edytuj
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Delete", new {id = item.Id})" data-bind="click: destroy">
+                                <i class="icon-trash"></i> Usuń
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Responses", new { surveyId = item.Id })">
+                                <i class="icon-list"></i> Odpowiedzi
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h4 class="mt-auto card-title text-center ">  </h4>
+
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
 <table id="survey-list" class="table table-striped">
     <thead>
         <tr>
             <th class="span1">ID</th>
-            <th class="span8">Name</th>
-            <th class="span2">Status</th>
-            <th class="span1">Action</th>
+            <th class="span8">Nazwa</th>
+            <th class="span2">Dostępność</th>
+            <th class="span1">Zarządzaj</th>
         </tr>
     </thead>
+
+    
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -46,23 +95,24 @@
                         <ul class="dropdown-menu pull-right">
                             <li>
                                 <a href="@Url.Action("Edit", new {id = item.Id})">
-                                    <i class="icon-pencil"></i> Edit
+                                    <i class="icon-pencil"></i> Edytuj
                                 </a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Delete", new {id = item.Id})" data-bind="click: destroy">
-                                    <i class="icon-trash"></i> Delete
+                                    <i class="icon-trash"></i> Usuń
                                 </a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "Responses", new { surveyId = item.Id })">
-                                    <i class="icon-list"></i> Responses
+                                    <i class="icon-list"></i> Odpowiedzi
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </td>
-            </tr> 
+            </tr>
+
         }
     </tbody>
 </table>

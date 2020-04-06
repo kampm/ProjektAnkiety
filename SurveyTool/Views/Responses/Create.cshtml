@@ -7,10 +7,10 @@
 @section Scripts
 {
     <script type="text/javascript">
-        $(function() {
-            $('.datepicker').datepicker({format: 'mm/dd/yyyy'});
+        $(function () {
+            $('.datepicker').datepicker({ format: 'mm/dd/yyyy' });
 
-            $(document).on('click', 'a[data-toggle=comment]', function() {
+            $(document).on('click', 'a[data-toggle=comment]', function () {
                 var id = $(this).attr('href');
                 $(id).toggle();
                 return false;
@@ -25,7 +25,7 @@
 
 <form action="@Url.Action("Create", "Responses", new {surveyId = Request["surveyId"]})" method="post">
     <div class="well well-small">
-        <h4>Questions</h4>
+        <h4>Pytania</h4>
     </div>
     <ul class="unstyled bordered skip-first">
         @foreach (var question in Model.Questions)
@@ -37,30 +37,62 @@
                     @Html.Raw(question.Body)
                 </div>
                 <div class="span3">
+                    @if (question.Type == "ABCD")
+                    {
+                        // todo zmienic potem
+                        <label class="radio-inline" for="A">
+                            A
+                            <input type="radio" name="Answers[@question.Id].Value" value="A">
+                        </label>
+                        <label class="radio-inline" for="B">
+                            B
+                            <input type="radio" name="Answers[@question.Id].Value" value="B">
+                        </label>
+                        <label class="radio-inline" for="C">
+                            C
+                            <input type="radio" name="Answers[@question.Id].Value" value="C">
+                        </label>
+                        <label class="radio-inline" for="D">
+                            D
+                            <input type="radio" name="Answers[@question.Id].Value" value="D">
+                        </label>
+
+
+                    }
+                    @if (question.Type == "Text")
+                    {
+                        <input class="span3" type="text" name="Answers[@question.Id].Value" placeholder="Wpisz odpowiedz" />
+                    }
                     @if (question.Type == "Yes/No")
                     {
-                        <select class="span3" name="Answers[@question.Id].Value">
-                            <option disabled selected>Select a value...</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
+
+                        <label class="radio-inline" for="Yes">
+                            Tak
+                            <input type="radio" name="Answers[@question.Id].Value" value="Yes">
+                        </label>
+
+                        <label class="radio-inline" for="No">
+                            Nie
+                            <input type="radio" name="Answers[@question.Id].Value" value="No">
+                        </label>
                     }
                     @if (question.Type == "Number")
                     {
-                        <input class="span3" type="text" name="Answers[@question.Id].Value" placeholder="Enter a number..." />
+                        <input class="span3" type="text" name="Answers[@question.Id].Value" placeholder="Wpisz numer" />
                     }
-                    <textarea id="@("comment" + question.Id)" class="span3 hide" name="Answers[@question.Id].Comment" placeholder="Comments..."></textarea>
-                    <a href="@("#comment" + @question.Id)" data-toggle="comment"><small>Show/Hide Comment</small></a>
+                    @*<textarea id="@("comment" + question.Id)" class="span3 hide" name="Answers[@question.Id].Comment" placeholder="Comments..."></textarea>
+        <a href="@("#comment" + @question.Id)" data-toggle="comment"><small>Show/Hide Comment</small></a>*@
                 </div>
             </li>
         }
     </ul>
-    
+
     <div class="form-actions">
-        <button class="btn btn-inverse pull-right" name="action" value="Next">
-            Save and Enter Another
+        @*<button class="btn btn-inverse pull-right" name="action" value="Next">
+          Zapisz i idz do następnej ankiety        </button>*@
+        <button class="btn btn-primary " name="action" value="Next">
+            Zapisz
         </button>
-        <input class="btn btn-primary" type="submit" name="action" value="Save" />
-        <a class="btn" href="@Url.Action("Index", "Home")">Cancel</a>
+        <a class="btn" href="@Url.Action("Index", "Home")">Anuluj</a>
     </div>
 </form>

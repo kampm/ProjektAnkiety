@@ -16,6 +16,8 @@ namespace SurveyTool
                             .Include("~/Content/bootstrap.css")
                             .Include("~/Content/bootstrap-datepicker.css"));
 
+            //
+
             bundles.Add(new StyleBundle("~/Content/cleditor")
                             .Include("~/Content/jquery.cleditor.css"));
 
@@ -23,15 +25,19 @@ namespace SurveyTool
                             .Include("~/Content/toastr.css"));
 
             bundles.Add(new StyleBundle("~/Content/site")
-                            .Include("~/Content/site.css"));
+                            .Include("~/Content/site.css")
+                            .Include("~/Content/font-awesome.css")
+                            .Include("~/Content/font-awesome.min.css"));
 
             // ====================================================================================
             // SCRIPTS
             // ====================================================================================
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap")
+                            .Include("~/Scripts/umd/popper.js")
                             .Include("~/Scripts/bootstrap.js")
                             .Include("~/Scripts/bootstrap-datepicker.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jquery")
                             .Include("~/Scripts/jquery-{version}.js")

@@ -44,8 +44,8 @@
                     <span class="muted" data-bind="text: type"></span>
                 </div>
                 <div class="span1 accordion-toggle text-center">
-                    <small class="text-success" data-bind="visible: isActive">Active</small>
-                    <small class="text-error" data-bind="visible: !isActive()">Inactive</small>
+                    <small class="text-success" data-bind="visible: isActive">Akytwna</small>
+                    <small class="text-error" data-bind="visible: !isActive()">Nieaktywna</small>
                 </div>
                 <div class="span2 accordion-toggle text-right">
                     <div class="btn-group">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="btn-group text-left">
                         <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-wrench"></i><span class="caret"></span>
+                            <i class="fa fa-pencil" title="Edit"></i>
                         </button>
                         <ul class="dropdown-menu pull-right">
                             <li>
@@ -95,20 +95,22 @@
     </div>
 </form>
 
-<div id="add-question" class="modal hide fade" data-bind="with: current">
+<div id="add-question" class="modal hide" data-bind="with: current">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3>Add Question</h3>
+        <h3>Dodaj pytanie</h3>
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="span3">
-                <label for="Title">Title</label>
+                <label for="Title">Tytuł</label>
                 <input type="text" id="Title"  name="Title" data-bind="value: title" />
             </div>
             <div class="span3">
-                <label for="Type">Type</label>
+                <label for="Type">Typ odpowiedzi</label>
                 <select id="Type" name="Type" data-bind="value: type">
+                    <option>ABCD</option>
+                    <option>Text</option>
                     <option>Yes/No</option>
                     <option>Number</option>
                 </select>
@@ -121,7 +123,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary" data-bind="click: $root.saveQuestion">Save</button>
+        @*<button class="btn" data-dismiss="modal">Zamknij</button>*@
+        <button type="button" class="btn btn-default" data-dismiss="modal">Closee</button>
+        <button class="btn btn-primary" data-bind="click: $root.saveQuestion">Zapisz</button>
     </div>
 </div>

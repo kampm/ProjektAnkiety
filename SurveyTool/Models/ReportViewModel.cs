@@ -22,23 +22,29 @@ namespace SurveyTool.Models
 
         public int Score
         {
-           get
-           {
-               if (Type == "Yes/No")
-                   return Answers.Sum(x => x.Value == "Yes" ? 1 : 0);
+            get
+            {
+                if (Type == "ABCD")
+                    return Answers.Sum(x => x.Value != null ? 1 : 0);
 
-               if (Type == "Number")
-               {
-                   return Answers.Sum(x =>
-                       {
-                           int num;
-                           Int32.TryParse(x.Value, out num);
-                           return num;
-                       });
-               }
+                if (Type == "Text")
+                    return Answers.Sum(x => x.Value != null ? 1 : 0);
 
-               return 0;
-           }
+                if (Type == "Yes/No")
+                    return Answers.Sum(x => x.Value == "Yes" ? 1 : 0);
+
+                if (Type == "Number")
+                {
+                    return Answers.Sum(x =>
+                        {
+                            int num;
+                            Int32.TryParse(x.Value, out num);
+                            return num;
+                        });
+                }
+
+                return 0;
+            }
         }
 
         public int Total
@@ -53,7 +59,7 @@ namespace SurveyTool.Models
 
         public string PercentageString
         {
-            get { return Answers.Any() ? String.Concat((Int32) (Percentage*100), "%") : "0%"; }
+            get { return Answers.Any() ? String.Concat((Int32)(Percentage * 100), "%") : "0%"; }
         }
     }
 }

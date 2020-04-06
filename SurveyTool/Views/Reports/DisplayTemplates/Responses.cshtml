@@ -29,7 +29,15 @@
                                 </div>
                             }
                         }
-                        else
+                        else if (item.Type == "Number")
+                        {
+                            <div class="progress span2 pull-right" style="margin-bottom: 0">
+                                <div class="bar bar-info" style="width: 100%">
+                                    @item.Score
+                                </div>
+                            </div>
+                        }
+                        else if (item.Type == "Text")
                         {
                             <div class="progress span2 pull-right" style="margin-bottom: 0">
                                 <div class="bar bar-info" style="width: 100%">
