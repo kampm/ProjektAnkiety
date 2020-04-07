@@ -1,37 +1,36 @@
 ﻿@model SurveyTool.Models.Survey
 
 <div class="page-header">
-    <a class="pull-right" href="@Url.Action("Index")">Back to Survey List &rarr;</a>
+    <a class="pull-right" href="@Url.Action("Index")">Wróć do listy ankiet &rarr;</a>
     <h2>@ViewData["title"]</h2>
 </div>
 
 <form id="survey-form" action="@ViewData["url"]" method="post">
-    <h4 class="well well-small">Survey</h4>
+
 
     <div class="row">
         <div class="span6">
             @Html.LabelFor(x => x.Name)
-            @Html.TextBoxFor(x => x.Name, new {@class = "span6"})
+            @Html.TextBoxFor(x => x.Name, new { @class = "span6" })
         </div>
         <div class="span6">
-            <label>Start / End Date</label> 
+            <label>Początek/koniec ankiety</label>
             @Html.EditorFor(x => x.StartDate)
             @Html.EditorFor(x => x.EndDate)
         </div>
     </div>
-    
-    <h4 class="well well-small">
-        <button class="btn btn-mini pull-right" data-bind="click: newQuestion">
-            <i class="icon-plus"></i> Add Question
+
+    <h4>
+        <button class="btn btn-primary pull-right" data-bind="click: newQuestion">
+            <i class="icon-plus"></i> Dodaj pytanie
         </button>
-        Questions
+        Pytania
     </h4>
-    
+
     <p data-bind="visible: !hasQuestions()">
-        <span class="label label-info">Heads up!</span>
-        You haven't added any questions.
+        Nie dodałeś jeszcze żadnych pytań.
     </p>
-    
+
     <div id="questions" data-bind="visible: hasQuestions, foreach: { data: questions, afterAdd: afterAdd }">
         <div class="accordion-group">
             <div class="row accordion-heading">
@@ -80,7 +79,7 @@
                 <div class="accordion-inner" data-bind="html: body"></div>
             </div>
         </div>
-        
+
         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Id', value: id }" />
         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Title', value: title }" />
         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Type', value: type }" />
@@ -88,43 +87,83 @@
         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Priority', value: $index() }" />
         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].IsActive' }, value: isActive" />
     </div>
-    
+
     <div class="form-actions">
-        <input class="btn btn-primary" type="submit" value="Save Survey" />
-        <a class="btn" href="@Url.Action("Index")">Cancel</a>
+        <input class="btn btn-primary" type="submit" value="Zapisz ankiete" />
+        <a class="btn" href="@Url.Action("Index")">Anuluj</a>
     </div>
 </form>
 
-<div id="add-question" class="modal hide" data-bind="with: current">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h3>Dodaj pytanie</h3>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="span3">
-                <label for="Title">Tytuł</label>
-                <input type="text" id="Title"  name="Title" data-bind="value: title" />
+
+<!-- Modal -->
+<div class="modal fade" id="add-question" tabindex="-1" data-bind="with: current" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Dodaj Pytanie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="span3">
-                <label for="Type">Typ odpowiedzi</label>
-                <select id="Type" name="Type" data-bind="value: type">
-                    <option>ABCD</option>
-                    <option>Text</option>
-                    <option>Yes/No</option>
-                    <option>Number</option>
-                </select>
+            <div class="modal-body">
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="span3">
+                        <label for="Title">Tytuł</label>
+                        <input type="text" id="Title" name="Title" data-bind="value: title" />
+                    </div>
+                    <div class="span3">
+                        <label for="Type">Typ odpowiedzi</label>
+                        <select id="Type" name="Type" data-bind="value: type">
+                            <option>ABCD</option>
+                            <option>Text</option>
+                            <option>Yes/No</option>
+                            <option>Number</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row h-100 justify-content-center align-items-center">
+                    <div class="span6">
+                        <textarea id="Body" name="Body" data-bind="cleditor: body"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                <button class="btn btn-primary" data-bind="click: $root.saveQuestion">Zapisz</button>
             </div>
         </div>
-        <div class="row">
-            <div class="span6">
-                <textarea id="Body" name="Body" data-bind="cleditor: body"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        @*<button class="btn" data-dismiss="modal">Zamknij</button>*@
-        <button type="button" class="btn btn-default" data-dismiss="modal">Closee</button>
-        <button class="btn btn-primary" data-bind="click: $root.saveQuestion">Zapisz</button>
     </div>
 </div>
+
+@*<div id="add-question" class="modal hide" data-bind="with: current">
+        <div class="modal-header">
+
+        </div>
+        <div class="modal-body">
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="span3">
+                    <label for="Title">Tytuł</label>
+                    <input type="text" id="Title" name="Title" data-bind="value: title" />
+                </div>
+                <div class="span3">
+                    <label for="Type">Typ odpowiedzi</label>
+                    <select id="Type" name="Type" data-bind="value: type">
+                        <option>ABCD</option>
+                        <option>Text</option>
+                        <option>Yes/No</option>
+                        <option>Number</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row h-100 justify-content-center align-items-center">
+                <div class="span6">
+                    <textarea id="Body" name="Body" data-bind="cleditor: body"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+            <button class="btn btn-primary" data-bind="click: $root.saveQuestion">Zapisz</button>
+        </div>
+    </div>*@

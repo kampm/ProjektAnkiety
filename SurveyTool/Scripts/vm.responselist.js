@@ -4,7 +4,7 @@
     self.destroy = function (item, event) {
         var $target = $(event.target);
 
-        if (confirm('Are you sure you want to delete this item?')) {
+        if (confirm('Na pewno chcesz usunąć?')) {
             $.post($target.attr('href'), function() {
                 $target.parents('tr').remove();
             });

@@ -41,7 +41,7 @@
             self.modal.modal('hide');
         }
         else {
-            alert('Error: All fields are required!');
+            alert('Wszystkie pola są wymagane');
         }
     };
 

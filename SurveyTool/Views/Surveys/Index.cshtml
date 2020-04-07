@@ -19,7 +19,7 @@
     @*<a class="btn btn-success pull-right" href="@Url.Action("Create")">
             <i class="icon-plus"></i> Nowa ankieta
         </a>*@
-    <h2>Ankiety <small>Dodaj lub edytuj ankiety</small></h2>
+    <h2>Ankiety </h2>
 </div>
 <div class="container-fluid">
     <div class="row d-inline-flex">
@@ -36,10 +36,13 @@
         @foreach (var item in Model)
         {
             <div class="col-6  col-lg-3 col-sm-4 col-md-4 p-2">
-                <div class="card" style="min-width: 130px">
-                    <h3 class="card-title">@item.Name </h3>
-                    <h4 class="card-subtitle">@Html.DisplayFor(x => item.IsActive, "IsActive")</h4>
-                    <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                <div class="card container" style="min-width: 150px; min-height: 150px">
+                    <div class="row d-flex">
+                        <h3 class="card-title col-10">@item.Name </h3>
+                        <div class="col-2">@Html.DisplayFor(x => item.IsActive, "IsActive")</div>
+                    </div>
+
+                    <button class="btn btn-small dropdown-toggle mt-auto" data-toggle="dropdown">
                         <i class="icon-wrench"></i><span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right">
@@ -60,7 +63,7 @@
                         </li>
                     </ul>
 
-                    <h4 class="mt-auto card-title text-center ">  </h4>
+                    
 
                 </div>
             </div>
@@ -68,51 +71,58 @@
         }
     </div>
 </div>
-<table id="survey-list" class="table table-striped">
-    <thead>
-        <tr>
-            <th class="span1">ID</th>
-            <th class="span8">Nazwa</th>
-            <th class="span2">Dostępność</th>
-            <th class="span1">Zarządzaj</th>
-        </tr>
-    </thead>
 
-    
-    <tbody>
 
-        @foreach (var item in Model)
-        {
+<a class="btn btn-primary" data-toggle="collapse" href="#tabklas" role="button" aria-expanded="false" aria-controls="collapseExample">
+    tab klasyczna do testow
+</a>
+<div class="collapse" id="tabklas">
+    <table id="survey-list" class="table table-striped ">
+        <thead>
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@Html.DisplayFor(x => item.IsActive, "IsActive")</td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-wrench"></i><span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <a href="@Url.Action("Edit", new {id = item.Id})">
-                                    <i class="icon-pencil"></i> Edytuj
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Delete", new {id = item.Id})" data-bind="click: destroy">
-                                    <i class="icon-trash"></i> Usuń
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Responses", new { surveyId = item.Id })">
-                                    <i class="icon-list"></i> Odpowiedzi
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
+                <th class="span1">ID</th>
+                <th class="span8">Nazwa</th>
+                <th class="span2">Dostępność</th>
+                <th class="span1">Zarządzaj</th>
             </tr>
+        </thead>
 
-        }
-    </tbody>
-</table>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@Html.DisplayFor(x => item.IsActive, "IsActive")</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-wrench"></i><span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="@Url.Action("Edit", new {id = item.Id})">
+                                        <i class="icon-pencil"></i> Edytuj
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Delete", new {id = item.Id})" data-bind="click: destroy">
+                                        <i class="icon-trash"></i> Usuń
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Responses", new { surveyId = item.Id })">
+                                        <i class="icon-list"></i> Odpowiedzi
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

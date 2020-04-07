@@ -17,7 +17,7 @@ namespace SurveyTool.Models
 
         [Key]
         public int Id { get; set; }
-
+        [Display(Name = "Tytuł ankiety")]
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }

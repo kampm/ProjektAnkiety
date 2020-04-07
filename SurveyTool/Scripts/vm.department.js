@@ -103,7 +103,7 @@ var DepartmentList = function(data) {
     // will be removed from the server as well.
     self.remove = function(item) {
         if (item.Id() > 0) {
-            if (confirm('Are you sure you want to delete this item?')) {
+            if (confirm('Na pewno chcesz usunąć?')) {
                 item.destroy(function() { self.items.remove(item); });
             }
         }
@@ -121,7 +121,7 @@ var DepartmentList = function(data) {
                 item.update(function() { self.current(null);  });
         }
         else {
-            toastr.error('All fields are required!');
+            toastr.error('Wszystkie pola są wymagane!');
         }
     };
     

@@ -28,7 +28,7 @@
 }
 
 <div class="page-header">
-    <h2>Ankiety <small>Take surveys and view history</small></h2>
+    <h2>Ankiety</h2>
 </div>
 
 <ul id="tabs" class="nav nav-tabs">
@@ -45,12 +45,12 @@
                     <h4>
                         @if (survey.IsActive)
                         {
-                            <span class="label label-success">A</span>
+                            <span class="badge badge-success">A</span>
                             <a href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">@survey.Name</a>
                         }
                         else
                         {
-                            <span class="label label-important">X</span>
+                            <span class="badge badge-danger">X</span>
                             <span class="muted">@survey.Name</span>
                         }
                     </h4>
