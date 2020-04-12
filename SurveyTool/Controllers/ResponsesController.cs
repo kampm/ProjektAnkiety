@@ -82,7 +82,7 @@ namespace SurveyTool.Controllers
             _db.Responses.Add(model);
             _db.SaveChanges();
 
-            TempData["success"] = "Your response was successfully saved!";
+            TempData["success"] = "Twoje odpowiedzi zostały zapisane!";
 
             return action == "Next"
                        ? RedirectToAction("Create", new {surveyId})

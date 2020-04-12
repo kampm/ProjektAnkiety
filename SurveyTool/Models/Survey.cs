@@ -20,8 +20,11 @@ namespace SurveyTool.Models
         [Display(Name = "Tytuł ankiety")]
         public string Name { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public List<Question> Questions { get; set; }
@@ -38,7 +41,7 @@ namespace SurveyTool.Models
             var js = JsonSerializer.Create(new JsonSerializerSettings());
             var jw = new StringWriter();
             js.Serialize(jw, this);
-            return jw.ToString();            
+            return jw.ToString();
         }
     }
 }

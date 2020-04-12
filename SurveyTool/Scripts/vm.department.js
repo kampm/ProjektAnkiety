@@ -2,7 +2,7 @@
 // AJAX SETUP
 // ================================================================================================
 $(document).ajaxStart(function() {
-    window.departmentsAlert = toastr.info('Saving...');
+    window.departmentsAlert = toastr.info('Zapisywanie...');
 });
 
 $(document).ajaxStop(function() {

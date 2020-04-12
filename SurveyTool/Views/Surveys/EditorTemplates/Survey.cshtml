@@ -8,15 +8,26 @@
 <form id="survey-form" action="@ViewData["url"]" method="post">
 
 
-    <div class="row">
-        <div class="span6">
-            @Html.LabelFor(x => x.Name)
-            @Html.TextBoxFor(x => x.Name, new { @class = "span6" })
+    <div class="">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                @Html.LabelFor(x => x.Name, new { @class = "input-group-text" })
+                @*<span class="input-group-text" id="basic-addon1">@</span>*@
+            </div>
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            @*<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">*@
         </div>
-        <div class="span6">
-            <label>Początek/koniec ankiety</label>
-            @Html.EditorFor(x => x.StartDate)
-            @Html.EditorFor(x => x.EndDate)
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="">Początek/koniec ankiety</span>
+            </div>
+
+
+            @Html.EditorFor(x => x.StartDate, new { @type = "date", htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => x.EndDate, new { @type = "date", htmlAttributes = new { @class = "form-control" } })
+
+
         </div>
     </div>
 
@@ -30,63 +41,128 @@
     <p data-bind="visible: !hasQuestions()">
         Nie dodałeś jeszcze żadnych pytań.
     </p>
+    <div >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nr. pytania</th>
+                    <th scope="col">Tytuł</th>
+                    <th scope="col">Pytanie</th>
+                    <th scope="col">Typ pytania</th>
+                    <th scope="col">Zarządzanie</th>
+                </tr>
+            </thead>
+            <tbody id="questions" data-bind="visible: hasQuestions, foreach: { data: questions, afterAdd: afterAdd }">
+                <tr>
+                    <th scope="row" data-bind="text: ($index() + 1)"></th>
+                    <td data-bind="text: title"></td>
 
-    <div id="questions" data-bind="visible: hasQuestions, foreach: { data: questions, afterAdd: afterAdd }">
-        <div class="accordion-group">
-            <div class="row accordion-heading">
-                <div class="span6 accordion-toggle">
-                    <a data-parent="#questions" data-toggle="collapse" data-bind="attr: { href: '#item'+$index() }">
-                        <span data-bind="text: title"></span>
-                    </a>
-                </div>
-                <div class="span1 accordion-toggle text-center">
-                    <span class="muted" data-bind="text: type"></span>
-                </div>
-                <div class="span1 accordion-toggle text-center">
-                    <small class="text-success" data-bind="visible: isActive">Akytwna</small>
-                    <small class="text-error" data-bind="visible: !isActive()">Nieaktywna</small>
-                </div>
-                <div class="span2 accordion-toggle text-right">
-                    <div class="btn-group">
-                        <a class="btn btn-small" href="#" data-bind="click: $root.moveUp"><i class="icon-arrow-up"></i></a>
-                        <a class="btn btn-small" href="#" data-bind="click: $root.moveDown"><i class="icon-arrow-down"></i></a>
-                    </div>
-                    <div class="btn-group text-left">
-                        <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-pencil" title="Edit"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <a href="#" data-bind="click: $root.editQuestion">
-                                    <i class="icon-pencil"></i> Edit
-                                </a>
-                            </li>
-                            <li data-bind="visible: !isActive()">
-                                <a href="#" data-bind="click: enable">
-                                    <i class="icon-ok-circle"></i> Enable
-                                </a>
-                            </li>
-                            <li data-bind="visible: isActive">
-                                <a href="#" data-bind="click: disable">
-                                    <i class="icon-ban-circle"></i> Disable
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="collapse" data-bind="attr: { id: 'item'+$index() }">
-                <div class="accordion-inner" data-bind="html: body"></div>
-            </div>
-        </div>
+                    <td data-bind="html: body"></td>
 
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Id', value: id }" />
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Title', value: title }" />
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Type', value: type }" />
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Body', value: body }" />
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Priority', value: $index() }" />
-        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].IsActive' }, value: isActive" />
+                    <td data-bind="text: type"></td>
+                    <td>
+                        <div class="span2 accordion-toggle">
+                            <small class="text-success" data-bind="visible: isActive">Akytwna</small>
+                            <small class="text-error" data-bind="visible: !isActive()">Nieaktywna</small>
+                            <div class="btn-group">
+                                <a class="btn btn-small" href="#" data-bind="click: $root.moveUp"><i class="icon-arrow-up"></i></a>
+                                <a class="btn btn-small" href="#" data-bind="click: $root.moveDown"><i class="icon-arrow-down"></i></a>
+                            </div>
+                            <div class="btn-group text-left">
+                                <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-pencil" title="Edytuj"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="#" data-bind="click: $root.editQuestion">
+                                            <i class="icon-pencil"></i> Edytuj
+                                        </a>
+                                    </li>
+                                    <li data-bind="visible: !isActive()">
+                                        <a href="#" data-bind="click: enable">
+                                            <i class="icon-ok-circle"></i> Włącz
+                                        </a>
+                                    </li>
+                                    <li data-bind="visible: isActive">
+                                        <a href="#" data-bind="click: disable">
+                                            <i class="icon-ban-circle"></i> Wyłącz
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Id', value: id }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Title', value: title }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Type', value: type }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Body', value: body }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Priority', value: $index() }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].IsActive' }, value: isActive" />
+                    </td>
+                </tr>
+
+            </tbody>
+            
+        </table>
+        
     </div>
+    @*<div id="questions" data-bind="visible: hasQuestions, foreach: { data: questions, afterAdd: afterAdd }">
+            <div class="accordion-group">
+                <div class="row accordion-heading">
+                    <div scope="col" class="span6 accordion-toggle">
+                        <a data-parent="#questions" data-toggle="collapse" data-bind="attr: { href: '#item'+$index() }">
+                            <span data-bind="text: title"></span>
+                        </a>
+                    </div>
+                    <div class="span1 accordion-toggle text-center">
+                        <span class="muted" data-bind="text: type"></span>
+                    </div>
+                    <div class="span1 accordion-toggle text-center">
+                        <small class="text-success" data-bind="visible: isActive">Akytwna</small>
+                        <small class="text-error" data-bind="visible: !isActive()">Nieaktywna</small>
+                    </div>
+                    <div class="span2 accordion-toggle text-right">
+                        <div class="btn-group">
+                            <a class="btn btn-small" href="#" data-bind="click: $root.moveUp"><i class="icon-arrow-up"></i></a>
+                            <a class="btn btn-small" href="#" data-bind="click: $root.moveDown"><i class="icon-arrow-down"></i></a>
+                        </div>
+                        <div class="btn-group text-left">
+                            <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-pencil" title="Edit"></i>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="#" data-bind="click: $root.editQuestion">
+                                        <i class="icon-pencil"></i> Edit
+                                    </a>
+                                </li>
+                                <li data-bind="visible: !isActive()">
+                                    <a href="#" data-bind="click: enable">
+                                        <i class="icon-ok-circle"></i> Enable
+                                    </a>
+                                </li>
+                                <li data-bind="visible: isActive">
+                                    <a href="#" data-bind="click: disable">
+                                        <i class="icon-ban-circle"></i> Disable
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse" data-bind="attr: { id: 'item'+$index() }">
+                    <div class="accordion-inner" data-bind="html: body"></div>
+                </div>
+            </div>
+
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Id', value: id }" />
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Title', value: title }" />
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Type', value: type }" />
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Body', value: body }" />
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Priority', value: $index() }" />
+            <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].IsActive' }, value: isActive" />
+        </div>*@
 
     <div class="form-actions">
         <input class="btn btn-primary" type="submit" value="Zapisz ankiete" />

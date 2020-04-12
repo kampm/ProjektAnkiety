@@ -46,12 +46,12 @@ namespace SurveyTool.Controllers
                 survey.Questions.ForEach(q => q.CreatedOn = q.ModifiedOn = DateTime.Now);
                 _db.Surveys.Add(survey);
                 _db.SaveChanges();
-                TempData["success"] = "The survey was successfully created!";
+                TempData["success"] = "Ankieta została utworzona!";
                 return RedirectToAction("Edit", new {id = survey.Id});
             }
             else
             {
-                TempData["error"] = "An error occurred while attempting to create this survey.";
+                TempData["error"] = "Wystąpił błąd podczas próby utworzenia ankiety.";
                 return View(survey);
             }
         }

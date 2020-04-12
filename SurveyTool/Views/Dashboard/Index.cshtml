@@ -58,13 +58,13 @@
                 <div class="span3 text-right">
                     @if (survey.IsActive)
                     {
-                        <a class="btn" href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">
+                        <a class="btn btn-light" href="@Url.Action("Create", "Responses", new { surveyId = survey.Id })">
                             Odpowiedz na ankiete <i class="icon-arrow-right"></i>
                         </a>
                     }
                     else
                     {
-                        <a class="btn disabled" href="#">Start Survey <i class="icon-arrow-right"></i></a>
+                        <a class="btn disabled" href="#">Zakończona <i class="icon-remove"></i></a>
                     }
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="span4 text-right">
                     <span class="@(survey.IsActive ? "" : "muted")">
                         Ostatnia odpowiedz: 
-                        @(survey.Responses.Select(x => x.CreatedOn.ToString("d")).FirstOrDefault() ?? "Never")
+                        @(survey.Responses.Select(x => x.CreatedOn.ToString("d")).FirstOrDefault() ?? "Brak")
                     </span>
                 </div>
             </div>
@@ -95,10 +95,10 @@
         <table id="response-list" class="table table-striped">
             <thead>
                 <tr>
-                    <th class="span1">Date</th>
-                    <th class="span8">Survey</th>
-                    <th class="span2">Results</th>
-                    <th class="span1">Action</th>
+                    <th class="span1">Data</th>
+                    <th class="span8">Ankieta</th>
+                    <th class="span2">Odpowiedzi</th>
+                    <th class="span1">Zarządzaj</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,7 +116,7 @@
                             @response.CalculateScore().ToString("P1")
                         </td>
                         <td>
-                            @Html.ActionLink("Delete", "Delete",
+                            @Html.ActionLink("Usuń", "Delete",
                                              new { Controller = "Responses", surveyId = response.SurveyId, id = response.Id },
                                              new { @class = "text-error", data_bind = "click: destroy" })
                         </td>

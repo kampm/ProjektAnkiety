@@ -1,7 +1,7 @@
 ﻿@model SurveyTool.Models.Survey
 
 @{
-    ViewBag.Title = "Edit Survey";
+    ViewBag.Title = "Tworzenie ankiety";
 }
 
 @section scripts
@@ -31,4 +31,4 @@
     </script>
 }
 
-@Html.EditorForModel(new {title = "Edit Survey", url = Url.Action("Edit", new {id = Model.Id})})
+@Html.EditorForModel(new {title = "Tworzenie ankiety", url = Url.Action("Edit", new {id = Model.Id})})
