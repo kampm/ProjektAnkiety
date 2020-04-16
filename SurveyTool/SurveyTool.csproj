@@ -203,9 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004041529382_InitialCreate1.cs" />
-    <Compile Include="Migrations\202004041529382_InitialCreate1.Designer.cs">
-      <DependentUpon>202004041529382_InitialCreate1.cs</DependentUpon>
+    <Compile Include="Migrations\202004131615361_init.cs" />
+    <Compile Include="Migrations\202004131615361_init.Designer.cs">
+      <DependentUpon>202004131615361_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -352,13 +352,14 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\_FlashPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004041529382_InitialCreate1.resx">
-      <DependentUpon>202004041529382_InitialCreate1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004131615361_init.resx">
+      <DependentUpon>202004131615361_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -38,14 +38,17 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <button type="submit" class="btn btn-primary">Zaloguj się</button>
-                    @*<div class="controls">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>*@
+                    <div class="row d-flex ">
+                        <button type="submit" class="btn btn-primary ml-3">Zaloguj się</button>
+                        <div class="ml-auto p-2">
+                                Nie masz konta?
+                                @Html.ActionLink("Zarejestruj się", "Register")
+                        </div>
+                    </div>
+
+
                 </div>
-                <p>
-                    @Html.ActionLink("Zarejestruj się", "Register")
-                </p>
+
                 @* Enable this once you have account confirmation enabled for password reset functionality
                     <p>
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
@@ -54,10 +57,10 @@
         </section>
     </div>
     @*<div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>*@
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>*@
 </div>
 
 @section Scripts {

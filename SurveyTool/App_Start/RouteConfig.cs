@@ -15,7 +15,7 @@ namespace SurveyTool
 
             routes.MapRoute(
                 name: "Root",
-                url: "",
+                url: "Dashboard/",
                 defaults: new { controller = "Dashboard", action = "Index" });
 
             routes.MapRoute(
