@@ -63,3 +63,7 @@ body {
     .toolbar h5 {
         margin: 0;
     }
+
+#hidden_div {
+    display: none;
+}

@@ -13,12 +13,13 @@ namespace SurveyTool.Models
         public int SurveyId { get; set; }
 
         public string Title { get; set; }
-        
+
         public string Type { get; set; }
 
         public string Body { get; set; }
 
         public int Priority { get; set; }
+        public string ABCDQuestions { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -27,5 +28,28 @@ namespace SurveyTool.Models
         public DateTime ModifiedOn { get; set; }
 
         public List<Answer> Answers { get; set; }
+        public IList<String> SplitQues
+        {
+            get
+            {
+
+                if (ABCDQuestions != null)
+                {
+                    List<string> s = new List<string>(
+                   ABCDQuestions.Split(new string[] { ";;" }, StringSplitOptions.None));
+                    return s;
+                }
+                else
+                {
+                    List<string> c = new List<string>();
+                    c.Add("i");
+                    return c;
+                }
+
+
+
+            }
+        }
+
     }
 }

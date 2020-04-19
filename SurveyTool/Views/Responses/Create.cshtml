@@ -34,6 +34,7 @@
                 <div class="span9">
                     <input type="hidden" name="Answers.Index" value="@question.Id" />
                     <input type="hidden" name="Answers[@question.Id].QuestionId" value="@question.Id" />
+
                     @Html.Raw(question.Body)
                 </div>
                 <div class="span3">
@@ -41,19 +42,19 @@
                     {
                         // todo zmienic potem
                         <label class="radio-inline" for="A">
-                            A
+                            A <label>@question.SplitQues[0]</label>
                             <input type="radio" name="Answers[@question.Id].Value" value="A">
                         </label>
                         <label class="radio-inline" for="B">
-                            B
+                            B <label>@question.SplitQues[1]</label>
                             <input type="radio" name="Answers[@question.Id].Value" value="B">
                         </label>
                         <label class="radio-inline" for="C">
-                            C
+                            C <label>@question.SplitQues[2]</label>
                             <input type="radio" name="Answers[@question.Id].Value" value="C">
                         </label>
                         <label class="radio-inline" for="D">
-                            D
+                            D <label>@question.SplitQues[3]</label>
                             <input type="radio" name="Answers[@question.Id].Value" value="D">
                         </label>
 
@@ -81,7 +82,7 @@
                         <input class="span3" type="text" name="Answers[@question.Id].Value" placeholder="Wpisz numer" />
                     }
                     @*<textarea id="@("comment" + question.Id)" class="span3 hide" name="Answers[@question.Id].Comment" placeholder="Comments..."></textarea>
-        <a href="@("#comment" + @question.Id)" data-toggle="comment"><small>Show/Hide Comment</small></a>*@
+                        <a href="@("#comment" + @question.Id)" data-toggle="comment"><small>Show/Hide Comment</small></a>*@
                 </div>
             </li>
         }
@@ -89,7 +90,7 @@
 
     <div class="form-actions">
         @*<button class="btn btn-inverse pull-right" name="action" value="Next">
-          Zapisz i idz do następnej ankiety        </button>*@
+            Zapisz i idz do następnej ankiety        </button>*@
         <button class="btn btn-primary " name="action" value="Next">
             Zapisz
         </button>

@@ -7,13 +7,13 @@ namespace SurveyTool.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class abcd_test2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(abcd_test2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004131615361_init"; }
+            get { return "202004181632413_abcd_test2"; }
         }
         
         string IMigrationMetadata.Source

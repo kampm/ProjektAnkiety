@@ -113,7 +113,8 @@ var DepartmentList = function(data) {
     };
     
     // Creates or updates the currently selected item on the server if it is valid.
-    self.save = function(item) {
+    self.save = function (item) {
+        console.log(item);
         if (item.isValid()) {
             if (item.Id() === 0)
                 item.insert(function(data) { item.Id(data.Id); self.current(null); });

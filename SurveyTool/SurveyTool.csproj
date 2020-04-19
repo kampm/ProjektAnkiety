@@ -203,9 +203,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004131615361_init.cs" />
-    <Compile Include="Migrations\202004131615361_init.Designer.cs">
-      <DependentUpon>202004131615361_init.cs</DependentUpon>
+    <Compile Include="Migrations\202004181619209_abcd_test.cs" />
+    <Compile Include="Migrations\202004181619209_abcd_test.Designer.cs">
+      <DependentUpon>202004181619209_abcd_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004181632413_abcd_test2.cs" />
+    <Compile Include="Migrations\202004181632413_abcd_test2.Designer.cs">
+      <DependentUpon>202004181632413_abcd_test2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004181709450_abcd_test21.cs" />
+    <Compile Include="Migrations\202004181709450_abcd_test21.Designer.cs">
+      <DependentUpon>202004181709450_abcd_test21.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -286,6 +294,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\knockout-3.4.2.debug.js" />
+    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\knockout.cleditor.js" />
     <Content Include="Scripts\knockout.enter.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
@@ -358,8 +370,14 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004131615361_init.resx">
-      <DependentUpon>202004131615361_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004181619209_abcd_test.resx">
+      <DependentUpon>202004181619209_abcd_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181632413_abcd_test2.resx">
+      <DependentUpon>202004181632413_abcd_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181709450_abcd_test21.resx">
+      <DependentUpon>202004181709450_abcd_test21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

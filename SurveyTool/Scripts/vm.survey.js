@@ -1,4 +1,4 @@
-﻿var SurveyModel = function(data) {
+﻿var SurveyModel = function (data) {
     var self = this;
 
     // Properties
@@ -7,28 +7,29 @@
     self.questions = ko.observableArray([]);
     self.current = ko.observable();
 
-    self.hasQuestions = ko.computed(function() {
+    self.hasQuestions = ko.computed(function () {
         return self.questions().length > 0;
     }, self);
 
-    self.questionCount = ko.computed(function() {
+    self.questionCount = ko.computed(function () {
         return self.questions().length;
     }, self);
-    
+
     // Functions
 
-    self.newQuestion = function() {
+    self.newQuestion = function () {
         self.current(new QuestionModel());
         self.modal.modal();
     };
 
-    self.editQuestion = function(item) {
+    self.editQuestion = function (item) {
         self.current(item);
         self.modal.modal();
     };
 
-    self.saveQuestion = function(item) {
+    self.saveQuestion = function (item) {
         var index;
+        console.log(item);
         if (item.isValid()) {
             index = self.questions.indexOf(item);
             if (index >= 0) {
@@ -45,7 +46,7 @@
         }
     };
 
-    self.moveUp = function(item) {
+    self.moveUp = function (item) {
         var currIndex = self.questions.indexOf(item),
             prevIndex = currIndex - 1;
 
@@ -54,8 +55,8 @@
             self.questions.splice(prevIndex, 0, item);
         }
     };
-    
-    self.moveDown = function(item) {
+
+    self.moveDown = function (item) {
         var currIndex = self.questions.indexOf(item),
             nextIndex = currIndex + 1,
             lastIndex = self.questions().length - 1;
@@ -68,7 +69,7 @@
 
     // Callbacks
 
-    self.afterAdd = function(elem) {
+    self.afterAdd = function (elem) {
         var el = $(elem);
         if (elem.nodeType === 1) {
             el.before("<div/>");
@@ -83,7 +84,7 @@
                 .fadeOut(500);
         }
     };
-    
+
     // Initialize
 
     if (data != null) {
@@ -93,6 +94,7 @@
             q.title(data.Questions[i].Title);
             q.type(data.Questions[i].Type);
             q.body(data.Questions[i].Body);
+            q.abcdQuestions(data.Questions[i].ABCDQuestions);
             q.isActive(data.Questions[i].IsActive);
             self.questions.push(q);
         }

@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
-    var surveys = (IEnumerable<SurveyTool.Models.Survey>) ViewBag.Surveys;
-    var responses = (IEnumerable<SurveyTool.Models.Response>) ViewBag.Responses;
+    var surveys = (IEnumerable<SurveyTool.Models.Survey>)ViewBag.Surveys;
+    var responses = (IEnumerable<SurveyTool.Models.Response>)ViewBag.Responses;
 }
 
 @section scripts
@@ -82,7 +82,7 @@
                 </div>
                 <div class="span4 text-right">
                     <span class="@(survey.IsActive ? "" : "muted")">
-                        Ostatnia odpowiedz: 
+                        Ostatnia odpowiedz:
                         @(survey.Responses.Select(x => x.CreatedOn.ToString("d")).FirstOrDefault() ?? "Brak")
                     </span>
                 </div>
@@ -104,23 +104,30 @@
             <tbody>
                 @foreach (var response in responses)
                 {
-                    <tr>
-                        <td><span class="muted">@response.CreatedOn.ToString("d")</span></td>
-                        <td>
-                            @Html.ActionLink(response.Survey.Name, "Details", "Responses", 
-                                             new {surveyId = response.SurveyId, id = response.Id}, 
-                                             null)
-                        </td>
-                        <td>
-                            @response.GetAnswerCount()/@response.GetQuestionCount() - 
-                            @response.CalculateScore().ToString("P1")
-                        </td>
-                        <td>
-                            @Html.ActionLink("Usuń", "Delete",
-                                             new { Controller = "Responses", surveyId = response.SurveyId, id = response.Id },
-                                             new { @class = "text-error", data_bind = "click: destroy" })
-                        </td>
-                    </tr>
+                    if (response.Survey != null)
+                    {
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td><span class="muted">@response.CreatedOn.ToString("d")</span></td>
+                            <td>
+                                @Html.ActionLink(response.Survey.Name, "Details", "Responses",
+                                                 new { surveyId = response.SurveyId, id = response.Id },
+                                                 null)
+                            </td>
+                            <td>
+                                @response.GetAnswerCount()/@response.GetQuestionCount() -
+                                @response.CalculateScore().ToString("P1")
+                            </td>
+                            <td>
+                                @Html.ActionLink("Usuń", "Delete",
+                                                 new { Controller = "Responses", surveyId = response.SurveyId, id = response.Id },
+                                                 new { @class = "text-error", data_bind = "click: destroy" })
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

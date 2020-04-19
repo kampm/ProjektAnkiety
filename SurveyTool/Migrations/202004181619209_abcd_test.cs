@@ -3,7 +3,7 @@ namespace SurveyTool.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class abcd_test : DbMigration
     {
         public override void Up()
         {
