@@ -129,6 +129,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -203,9 +204,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004041529382_InitialCreate1.cs" />
-    <Compile Include="Migrations\202004041529382_InitialCreate1.Designer.cs">
-      <DependentUpon>202004041529382_InitialCreate1.cs</DependentUpon>
+    <Compile Include="Migrations\202004131622496_init.cs" />
+    <Compile Include="Migrations\202004131622496_init.Designer.cs">
+      <DependentUpon>202004131622496_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -357,8 +358,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004041529382_InitialCreate1.resx">
-      <DependentUpon>202004041529382_InitialCreate1.cs</DependentUpon>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004131622496_init.resx">
+      <DependentUpon>202004131622496_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
