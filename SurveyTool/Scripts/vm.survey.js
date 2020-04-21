@@ -95,6 +95,7 @@
             q.type(data.Questions[i].Type);
             q.body(data.Questions[i].Body);
             q.abcdQuestions(data.Questions[i].ABCDQuestions);
+            q.splitQues(data.Questions[i].SplitQues);
             q.isActive(data.Questions[i].IsActive);
             self.questions.push(q);
         }

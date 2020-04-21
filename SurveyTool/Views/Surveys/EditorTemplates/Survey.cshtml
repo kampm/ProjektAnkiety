@@ -1,32 +1,38 @@
 ﻿@model SurveyTool.Models.Survey
 
 
+@*if (document.getElementById("ABCDQuestionA") == null) {
+        var el = document.getElementById("ABCDQuestionA");
+        console.log("1", typeof el);
+        return abcdQuestions;
+    }
 
+    else {
+        console.log("2");
+        if (document.getElementById("ABCDQuestionA") == null) {
+            console.log("niema")
+            return abcdQuestions;
+        }
+        else {*@
 
 <script>
-    function sumString(abcdQuestions) {
-        var el = document.getElementById("ABCDQuestionA");
-        if (typeof el !== 'undefined &&' || el !== null) {
-            console.log("1")
-            return abcdQuestions
+    function sumString(abcdQuestions, splitQues) {
 
-        }
+        console.log("jest", abcdQuestions._latestValue, splitQues)
+        //var a = document.getElementById("ABCDQuestionA").value;
+        //var b = document.getElementById("ABCDQuestionB").value;
+        //var c = document.getElementById("ABCDQuestionC").value;
+        //var d = document.getElementById("ABCDQuestionD").value;
+        var a = splitQues[0];
+        var b = splitQues[1];
+        var c = splitQues[2];
+        var d = splitQues[3];
+        console.log(a)
+        var o = ';;'
+        var sum = a + o + b + o + c + o + d;
+        return sum;
 
-        else {
-            var a = document.getElementById("ABCDQuestionA").value;
-            var b = document.getElementById("ABCDQuestionB").value;
-            var c = document.getElementById("ABCDQuestionC").value;
-            var d = document.getElementById("ABCDQuestionD").value;
-            console.log("2")
 
-            var o = ';;'
-            var sum = a + o + b + o + c + o + d + o;
-            return sum;
-
-        }
-        //else {
-        //    console.log("3 blad")
-        //}
     }
     function showDiv(divId, element) {
         document.getElementById(divId).style.display = element.value == 'ABCD' ? 'block' : 'none';
@@ -34,7 +40,6 @@
 
 
 </script>
-
 
 <div class="page-header">
     <a class="pull-right" href="@Url.Action("Index")">Wróć do listy ankiet &rarr;</a>
@@ -97,7 +102,7 @@
 
                     <td data-bind="text: type"></td>
 
-                    <td data-bind="text: abcdQuestions"></td>
+
                     <td>
                         <div class="span2 accordion-toggle">
                             <small class="text-success" data-bind="visible: isActive">Akytwna</small>
@@ -130,6 +135,7 @@
                             </div>
                         </div>
                     </td>
+
                     <td>
                         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Id', value: id }" />
                         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Title', value: title }" />
@@ -137,8 +143,31 @@
                         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Body', value: body }" />
                         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].Priority', value: $index() }" />
                         @*<input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].ABCDQuestions', value: abcdQuestions }" />*@
-                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].ABCDQuestions', value: sumString(abcdQuestions) }" />
+                        <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].ABCDQuestions', value: sumString(abcdQuestions,splitQues()) }" />
                         <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].IsActive' }, value: isActive" />
+                        @* <input type="hidden" data-bind="attr: { name: 'Questions['+$index()+'].SplitQues' }, value: splitQues()" />*@
+                        <!-- ko if: type() == 'ABCD' -->
+                        <button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-chevron-circle-down" title="Edytuj"></i>
+                        </button>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <p data-bind=" text: splitQues()[0]"></p>
+                            </li>
+                            <li>
+                                <p data-bind=" text: splitQues()[1]"></p>
+                            </li>
+                            <li>
+                                <p data-bind=" text: splitQues()[2]"></p>
+                            </li>
+                            <li>
+                                <p data-bind=" text: splitQues()[3]"></p>
+                            </li>
+
+                        </ul>
+                        <!-- /ko -->
+
+
                     </td>
                 </tr>
 
@@ -174,7 +203,7 @@
                     </div>
                     <div class="span3">
                         <label for="Type">Typ odpowiedzi</label>
-                        <select id="Type" name="Type" data-bind="value: type" onchange="showDiv('hidden_div', this)">
+                        <select id="Type" name="Type" data-bind="value: type">
                             <option>ABCD</option>
                             <option>Text</option>
                             <option>Yes/No</option>
@@ -189,36 +218,37 @@
                 </div>
                 <span data-bind="text: type"></span>
                 <!-- ABCDPytania -->
-
-                <div id="hidden_div" class="row h-100 justify-content-center align-items-center">
+                @* <input class="form-control" type="text" placeholder="Pytanie A" id="ABCDQuestionA" name="ABCDQuestionA" data-bind="value: abcdQuestions" required="required" />*@
+                <!-- ko if: type() == 'ABCD' -->
+                <div  class="row h-100 justify-content-center align-items-center">
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">A</span>
                         </div>
-                        <input class="form-control" type="text" placeholder="Pytanie A" id="ABCDQuestionA" name="ABCDQuestionA" data-bind="value: abcdQuestionA" required="required" />
+                        <input class="form-control" type="text" placeholder="Pytanie A" id="ABCDQuestionA" name="ABCDQuestionA" data-bind="value: splitQues()[0] " required="required" />
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">B</span>
                         </div>
-                        <input class="form-control" type="text" placeholder="Pytanie B" id="ABCDQuestionB" name="ABCDQuestionB" data-bind="value: abcdQuestionB" required="required" />
+                        <input class="form-control" type="text" placeholder="Pytanie B" id="ABCDQuestionB" name="ABCDQuestionB" data-bind="value: splitQues()[1]" required="required" />
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">C</span>
                         </div>
-                        <input class="form-control" type="text" placeholder="Pytanie C" id="ABCDQuestionC" name="ABCDQuestionC" data-bind="value: abcdQuestionC" required="required" />
+                        <input class="form-control" type="text" placeholder="Pytanie C" id="ABCDQuestionC" name="ABCDQuestionC" data-bind="value: splitQues()[2]" required="required" />
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">D</span>
                         </div>
-                        <input class="form-control" type="text" placeholder="Pytanie D" id="ABCDQuestionD" name="ABCDQuestionD" data-bind="value: abcdQuestionD" required="required" />
+                        <input class="form-control" type="text" placeholder="Pytanie D" id="ABCDQuestionD" name="ABCDQuestionD" data-bind="value: splitQues()[3]" required="required" />
                     </div>
 
                 </div>
-
+                <!-- /ko -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>

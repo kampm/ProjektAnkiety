@@ -10,6 +10,7 @@
     self.abcdQuestionC = ko.observable();
     self.abcdQuestionD = ko.observable();
     self.abcdQuestions = ko.observable();
+    self.splitQues = ko.observableArray();
     self.isActive = ko.observable(true);
 
     self.activeText = ko.computed(function () {
