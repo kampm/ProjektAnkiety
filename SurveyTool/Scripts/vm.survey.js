@@ -30,7 +30,11 @@
     self.saveQuestion = function (item) {
         var index;
         console.log(item);
-        if (item.isValid()) {
+        if (item.type._latestValue == 'ABCD' && item.splitQues._latestValue.length <= 3) {
+            
+            alert('Wypełnij 4 odpowiedzi!');
+        }
+        else if (item.isValid()) {
             index = self.questions.indexOf(item);
             if (index >= 0) {
                 self.questions.splice(index, 1);
@@ -42,7 +46,8 @@
             self.modal.modal('hide');
         }
         else {
-            alert('Wszystkie pola są wymagane!');
+            //console.log(item.splitQues._latestValue.length == 4, item.type._latestValue == 'ABCD')
+            alert('Wszystkie pola są wymagane!!');
         }
     };
 
