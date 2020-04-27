@@ -1,0 +1,43 @@
+﻿@model SurveyTool.Models.Survey
+@{
+    ViewBag.Title = "GeneratePDF";
+}
+
+<h2>@ViewBag.PDF</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tytul</th>
+            <th scope="col">Pytanie</th>
+            <th scope="col">Typ Pytania</th>
+            <th scope="col">Pytania ABCD</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Questions)
+        {
+            <tr>
+                <th scope="row">@item.Priority</th>
+                <td>@item.Title</td>
+                <td>@item.Body</td>
+                <td>@item.Type</td>
+                @if (item.Type == "ABCD")
+                {
+                    <td>
+                        @foreach (var item2 in item.SplitQues)
+                        {
+                            @(item2+" ");
+                        }
+                    </td>
+                }
+
+                <td></td>
+            </tr>
+        }
+</table>
+<a href="@Url.Action("DownloadPDF", new {id = Model.Id})">
+    <i class="icon-download-alt"></i> Pobierz PDF
+</a>
+

@@ -27,11 +27,15 @@
         var b = splitQues[1];
         var c = splitQues[2];
         var d = splitQues[3];
-        console.log(a)
-        var o = ';;'
-        var sum = a + o + b + o + c + o + d;
-        return sum;
-
+        if (typeof a === 'undefined') {
+            return "";
+        }
+        else {
+            console.log(a)
+            var o = ';;'
+            var sum = a + o + b + o + c + o + d;
+            return sum;
+        }
 
     }
     function showDiv(divId, element) {
@@ -197,13 +201,13 @@
             </div>
             <div class="modal-body">
                 <div class="row h-100 justify-content-center align-items-center">
-                    <div class="span3">
+                    <div class="form-group">
                         <label for="Title">Tytuł</label>
-                        <input type="text" id="Title" name="Title" data-bind="value: title" />
+                        <input class="form-control" type="text" id="Title" name="Title" data-bind="value: title" />
                     </div>
-                    <div class="span3">
+                    <div class="form-group">
                         <label for="Type">Typ odpowiedzi</label>
-                        <select id="Type" name="Type" data-bind="value: type">
+                        <select class="form-control" id="Type" name="Type" data-bind="value: type">
                             <option>ABCD</option>
                             <option>Text</option>
                             <option>Yes/No</option>
@@ -211,16 +215,17 @@
                         </select>
                     </div>
                 </div>
-                <div class="row h-100 justify-content-center align-items-center">
-                    <div class="span6">
-                        <textarea id="Body" name="Body" data-bind="cleditor: body"></textarea>
+                <div class="justify-content-center align-items-center">
+                    <div class="form-group">
+                        <label for="Body">Pytanie</label>
+                        <textarea class="form-control" id="Body" name="Body" data-bind="value: body"></textarea>
                     </div>
                 </div>
-                <span data-bind="text: type"></span>
+
                 <!-- ABCDPytania -->
                 @* <input class="form-control" type="text" placeholder="Pytanie A" id="ABCDQuestionA" name="ABCDQuestionA" data-bind="value: abcdQuestions" required="required" />*@
                 <!-- ko if: type() == 'ABCD' -->
-                <div  class="row h-100 justify-content-center align-items-center">
+                <div class="row h-100 justify-content-center align-items-center">
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
