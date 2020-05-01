@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 using SurveyTool.Models;
 
 namespace SurveyTool.Models
@@ -15,9 +16,13 @@ namespace SurveyTool.Models
 
     public class QuestionViewModel
     {
+
         public string Title { get; set; }
+
         public string Body { get; set; }
+
         public string Type { get; set; }
+
         public List<Answer> Answers { get; set; }
 
         public int Score

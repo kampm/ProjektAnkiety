@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using CsvHelper;
 using iText.Forms;
 using iText.Forms.Fields;
 using iText.IO.Font;
@@ -138,22 +139,6 @@ namespace SurveyTool.Controllers
                 if (i.IsActive)
                 {
                     document.Add(new Paragraph($"Pytanie {i.Priority + 1}:  {i.Body}").SetFont(font));
-
-                    //Cell cell = new Cell();
-
-                    //Paragraph p = new Paragraph();
-                    //Text t1 = new Text("Some bold text, ");
-                    //t1.SetFont(font);
-                    //t1.SetFontSize(9);
-                    //p.Add(t1);
-
-                    //Text t2 = new Text("some normal text");
-                    //t2.SetFont(fontBox);
-                    //t2.SetFontSize(12);
-                    //p.Add(t2);
-
-
-                    //document.Add(cell.Add(p));
                     if (i.Type == "Yes/No")
                     {
                         Cell cell = new Cell();
@@ -211,6 +196,93 @@ namespace SurveyTool.Controllers
             string filePath = $"PDF\\{id}.pdf";
             string path = System.IO.Path.Combine(basePath, filePath);
             return File(path, "application/pdf");
+        }
+        public ActionResult ExportResult(int id)
+        {
+
+            var questions = new List<Question>();
+            _db.Questions
+                          .Where(q => q.SurveyId == id)
+                          .OrderBy(q => q.Priority)
+                          .Select(q => new
+                          {
+                              q.Title,
+                              q.Body,
+                              q.Type,
+                              q.ABCDQuestions,
+                              Answers = _db.Answers.Where(a => a.QuestionId == q.Id)
+                          })
+                          .ToList()
+                          .ForEach(r => questions.Add(new Question
+                          {
+                              Title = r.Title,
+                              Body = r.Body,
+                              Type = r.Type,
+                              ABCDQuestions = r.ABCDQuestions,
+                              Answers = r.Answers.ToList()
+                          })); ;
+
+            var resp = new List<Response>();
+            var survey = _db.Surveys.Single(s => s.Id == id);
+            _db.Responses
+                .Where(q => q.SurveyId == id)
+                .Select(q => new
+                {
+                    q.CreatedOn
+                })
+                .ToList()
+                .ForEach(r => resp.Add(new Response
+                {
+                    CreatedOn = r.CreatedOn
+                }));
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(memoryStream, System.Text.Encoding.UTF8))
+                {
+                    using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                    {
+                        csv.WriteField(survey.Name);
+                        csv.NextRecord();
+                        csv.WriteField("Data udzielania odpowiedzi");
+                        csv.WriteField("Id ankietowanego");
+                        csv.WriteField("Tytuł");
+                        csv.WriteField("Pytanie");
+                        csv.WriteField("Typ pytania");
+                        csv.WriteField("Odpowiedz");
+                        
+                        csv.WriteField("Odp A");
+                        csv.WriteField("Odp B");
+                        csv.WriteField("Odp C");
+                        csv.WriteField("Odp D");
+                        csv.NextRecord();
+                        for (int i = 0; i < questions.Count; i++)
+                        {
+                            for (int j = 0; j < questions[i].Answers.Count; j++)
+                            {
+                                csv.WriteField(resp[j].CreatedOn);
+                                csv.WriteField(questions[i].Answers[j].ResponseId);
+                                csv.WriteField(questions[i].Title);
+                                csv.WriteField(questions[i].Body);
+                                csv.WriteField(questions[i].Type);
+                                csv.WriteField(questions[i].Answers[j].Value);
+                                 if (questions[i].Type == "ABCD")
+                                {
+                                    csv.WriteField(questions[i].ABCDQuestions.Split(new string[] { ";;" }, StringSplitOptions.None));
+                                }
+                                csv.NextRecord();
+                            }
+                        }
+                    }
+                }
+
+                var arr = memoryStream.ToArray();
+                return File(arr, "text/csv", $"{id}.csv");
+
+            }
+
+
+            //return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", $"{id}.csv");
+
         }
     }
 }
