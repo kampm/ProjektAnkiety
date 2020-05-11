@@ -66,5 +66,41 @@ namespace SurveyTool.Models
         {
             get { return Answers.Any() ? String.Concat((Int32)(Percentage * 100), "%") : "0%"; }
         }
+        public int GetScoreA
+        {
+            get
+            {
+                if (Type == "ABCD")
+                    return Answers.Sum(x => x.Value == "A" ? 1 : 0);
+                return 0;
+            }
+        }
+        public int GetScoreB
+        {
+            get
+            {
+                if (Type == "ABCD")
+                    return Answers.Sum(x => x.Value == "B" ? 1 : 0);
+                return 0;
+            }
+        }
+        public int GetScoreC
+        {
+            get
+            {
+                if (Type == "ABCD")
+                    return Answers.Sum(x => x.Value == "C" ? 1 : 0);
+                return 0;
+            }
+        }
+        public int GetScoreD
+        {
+            get
+            {
+                if (Type == "ABCD")
+                    return Answers.Sum(x => x.Value == "A" ? 1 : 0);
+                return 0;
+            }
+        }
     }
 }

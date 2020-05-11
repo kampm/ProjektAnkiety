@@ -1,12 +1,38 @@
 ﻿@model IEnumerable<SurveyTool.Models.QuestionViewModel>
 
+
+@Scripts.Render("~/bundles/chart")
+
+
 <h5>Responses</h5>
+
 @if (Model.Any())
 {
     <div id="responses" class="accordion">
         @for (var i = 0; i < Model.Count(); i++)
         {
             var item = Model.ElementAt(i);
+
+            string t = item.Type;
+            var tmp = (from x in item.Answers select x.Value).OrderBy(x => x);
+            var lst = tmp.Distinct().Aggregate((curr, next) => curr + ", " + next);
+            //var lstCount = tmp.Count();
+            var qry = (from s in tmp
+                       group s by s into grp
+
+                       select new
+                       {
+
+                           num = grp.Key,
+                           count = grp.Count()
+                       }).ToList();
+            var lstCount = "";
+            foreach (var q in qry)
+            {
+                lstCount += q.count + ",";
+            }
+
+
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" href="@String.Concat("#item", i)" data-parent="#responses" data-toggle="collapse">
@@ -28,6 +54,12 @@
                                     </div>
                                 </div>
                             }
+
+                        }
+                        else if (item.Type == "ABCD")
+                        {
+
+
                         }
                         else if (item.Type == "Number")
                         {
@@ -36,6 +68,7 @@
                                     @item.Score
                                 </div>
                             </div>
+
                         }
                         else if (item.Type == "Text")
                         {
@@ -49,9 +82,112 @@
                     </a>
                 </div>
                 <div id="@String.Concat("item", i)" class="accordion-body collapse">
-                    <div class="accordion-inner">@Html.Raw(item.Body)</div>
+                    <div class="accordion-inner">
+                        @Html.Raw(item.Body)
+
+                    </div>
+                    <div><canvas id="@String.Concat("#item", i)" width="600" height="400"></canvas></div>
                 </div>
             </div>
+            <script>
+            var type = "@(item.Type)";
+            console.log("ta");
+            if (type == 'Yes/No') {
+
+                console.log("ta2");
+                var ctx = document.getElementById("@String.Concat("#item", i)").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Tak', 'Nie'],
+                        datasets: [{
+                            label: '# Liczba głosów',
+                            data: [@item.Score, @item.Total-@item.Score],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+             if (type == 'ABCD') {
+
+                console.log("ta3");
+                new Chart(document.getElementById("@String.Concat("#item", i)"), {
+                    "type": "bar",
+                    "data": {
+                        "labels": ['A', 'B', 'C', 'D'],
+                        "datasets": [{
+                            "label": "@item.Title",
+                            "data": [@item.GetScoreA, @item.GetScoreB,@item.GetScoreC,@item.GetScoreD],
+                            "fill": false,
+                            "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                            "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                            "borderWidth": 1
+                        }]
+                    },
+                    "options": {
+                        "scales": {
+                            "yAxes": [{
+                                "ticks": {
+                                    "beginAtZero": true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+            if (type == 'Number') {
+
+
+                console.log("ta4");
+
+                new Chart(document.getElementById("@String.Concat("#item", i)"), {
+
+                    "type": "bar",
+                    "data": {
+                        "labels": [@lst],
+                        "datasets": [{
+                            "label": "@item.Title",
+                            "data": [@lstCount],
+                            "fill": false,
+                            "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                            "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                            "borderWidth": 1
+                        }]
+                    },
+                    "options": {
+                        "scales": {
+                            "yAxes": [{
+                                "ticks": {
+                                    "beginAtZero": true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+            </script>
         }
     </div>
 }
+
+

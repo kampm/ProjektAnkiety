@@ -60,6 +60,10 @@ namespace SurveyTool
             bundles.Add(new ScriptBundle("~/bundles/toastr")
                             .Include("~/Scripts/toastr.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/chart")
+                            .Include("~/Scripts/Chart.js"));
+
+
             bundles.Add(new ScriptBundle("~/bundles/models")
                             .Include("~/Scripts/vm.department.js")
                             .Include("~/Scripts/vm.question.js")
