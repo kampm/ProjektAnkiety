@@ -3,7 +3,7 @@
  * (c) The Knockout.js team - http://knockoutjs.com/
  * License: MIT (http://www.opensource.org/licenses/mit-license.php)
  */
-console.log("knockuout 3.4.2")
+console.log("knockuout 3.4.2");
 (function(){
 var DEBUG=true;
 (function(undefined){

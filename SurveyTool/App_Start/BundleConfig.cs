@@ -40,10 +40,11 @@ namespace SurveyTool
 
 
             bundles.Add(new ScriptBundle("~/bundles/jquery")
-                            .Include("~/Scripts/jquery-{version}.js")
+                            .Include("~/Scripts/jquery-1.9.1.js")
                             .Include("~/Scripts/jquery-migrate-1.1.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval")
+
                             .Include("~/Scripts/jquery.unobtrusive*")
                             .Include("~/Scripts/jquery.validate*"));
 

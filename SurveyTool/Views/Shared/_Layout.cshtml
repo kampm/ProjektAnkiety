@@ -6,13 +6,14 @@
     <title>@ViewBag.Title - Aplikacja do ankietowania</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/cleditor")
+    @Styles.Render("~/Content/toastr")
     @Styles.Render("~/Content/site")
 
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
-    @RenderSection("scripts", required: false)
-    @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/cleditor")
-    @Styles.Render("~/Content/toastr")
+    @*@RenderSection("scripts", required: false)*@
+
+
 </head>
 <body>
     @*<div class="navbar navbar-inverse navbar-fixed-top">
@@ -57,13 +58,15 @@
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+
 
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/toastr")
-
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
     @Html.Partial("_FlashPartial")
-   
+
 
     <script>
         $('.navbar-nav .nav-link').click(function () {

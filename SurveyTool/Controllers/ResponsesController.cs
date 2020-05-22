@@ -55,12 +55,12 @@ namespace SurveyTool.Controllers
             var survey = _db.Surveys
                             .Where(s => s.Id == surveyId)
                             .Select(s => new
-                                {
-                                    Survey = s,
-                                    Questions = s.Questions
+                            {
+                                Survey = s,
+                                Questions = s.Questions
                                                  .Where(q => q.IsActive)
                                                  .OrderBy(q => q.Priority)
-                                })
+                            })
                              .AsEnumerable()
                              .Select(x =>
                                  {
@@ -75,6 +75,11 @@ namespace SurveyTool.Controllers
         [HttpPost]
         public ActionResult Create(int surveyId, string action, Response model)
         {
+            if (model.Answers == null)
+            {
+                ViewBag.Message = "Brak pytań!";
+                return View("Error");
+            }
             model.Answers = model.Answers.Where(a => !String.IsNullOrEmpty(a.Value)).ToList();
             model.SurveyId = surveyId;
             model.CreatedBy = User.Identity.Name;
@@ -85,7 +90,7 @@ namespace SurveyTool.Controllers
             TempData["success"] = "Twoje odpowiedzi zostały zapisane!";
 
             return action == "Next"
-                       ? RedirectToAction("Create", new {surveyId})
+                       ? RedirectToAction("Create", new { surveyId })
                        : RedirectToAction("Index", "Home");
         }
 
