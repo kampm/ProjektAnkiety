@@ -18,6 +18,7 @@ using iText.Kernel.Pdf.Canvas;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Renderer;
+using Microsoft.AspNet.Identity;
 using SurveyTool.Models;
 
 namespace SurveyTool.Controllers
@@ -35,7 +36,8 @@ namespace SurveyTool.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var surveys = _db.Surveys.ToList();
+            string currentUserId = User.Identity.GetUserId();
+            var surveys = _db.Surveys.Where(u => u.User == currentUserId).ToList();
             return View(surveys);
         }
 
@@ -45,7 +47,8 @@ namespace SurveyTool.Controllers
             var survey = new Survey
             {
                 StartDate = DateTime.Now,
-                EndDate = DateTime.Now.AddYears(1)
+                EndDate = DateTime.Now.AddYears(1),
+                User = User.Identity.GetUserId()
             };
 
             return View(survey);
@@ -73,6 +76,12 @@ namespace SurveyTool.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var currentUserId = User.Identity.GetUserId();
+            if (_db.Surveys.Where(u => u.User == currentUserId).SingleOrDefault(x => x.Id == id) == null)
+            {
+                ViewBag.Message = "Brak uprawnień do edycji!";
+                return View("Error");
+            }
             var survey = _db.Surveys.Include("Questions").Single(x => x.Id == id);
             survey.Questions = survey.Questions.OrderBy(q => q.Priority).ToList();
             return View(survey);
@@ -108,6 +117,7 @@ namespace SurveyTool.Controllers
         [HttpPost]
         public ActionResult Delete(Survey survey)
         {
+
             _db.Entry(survey).State = EntityState.Deleted;
             _db.SaveChanges();
             return RedirectToAction("Index");
@@ -249,7 +259,7 @@ namespace SurveyTool.Controllers
                         csv.WriteField("Pytanie");
                         csv.WriteField("Typ pytania");
                         csv.WriteField("Odpowiedz");
-                        
+
                         csv.WriteField("Odp A");
                         csv.WriteField("Odp B");
                         csv.WriteField("Odp C");
@@ -265,7 +275,7 @@ namespace SurveyTool.Controllers
                                 csv.WriteField(questions[i].Body);
                                 csv.WriteField(questions[i].Type);
                                 csv.WriteField(questions[i].Answers[j].Value);
-                                 if (questions[i].Type == "ABCD")
+                                if (questions[i].Type == "ABCD")
                                 {
                                     csv.WriteField(questions[i].ABCDQuestions.Split(new string[] { ";;" }, StringSplitOptions.None));
                                 }

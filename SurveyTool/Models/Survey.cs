@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 
 namespace SurveyTool.Models
@@ -26,6 +27,9 @@ namespace SurveyTool.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
+        public string User { get; set; }
+        [Display(Name = "Ankieta widoczna publicznie?")]
+        public bool Show { get; set; }
 
         public List<Question> Questions { get; set; }
 

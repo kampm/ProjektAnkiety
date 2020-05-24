@@ -28,15 +28,16 @@ namespace SurveyTool.Controllers
         private IEnumerable<Survey> GetSurveys()
         {
             return _db.Surveys
+                      .Where(u => u.Show)
                       .Select(s => new
-                          {
-                              Survey = s,
-                              Questions = s.Questions.Where(q => q.IsActive),
-                              Responses = s.Responses
+                      {
+                          Survey = s,
+                          Questions = s.Questions.Where(q => q.IsActive),
+                          Responses = s.Responses
                                            .Where(r => r.CreatedBy == User.Identity.Name)
                                            .OrderByDescending(r => r.CreatedOn)
                                            .Take(1)
-                          })
+                      })
                       .AsEnumerable()
                       .Select(x =>
                           {
