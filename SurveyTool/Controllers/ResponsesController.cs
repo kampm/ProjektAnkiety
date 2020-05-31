@@ -48,10 +48,26 @@ namespace SurveyTool.Controllers
             response.Answers = response.Answers.OrderBy(x => x.Question.Priority).ToList();
             return View(response);
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Create(int surveyId)
         {
+            HttpCookie cookie = Request.Cookies.Get("resplist");
+            if (cookie != null)
+            {
+                string dataAsString = cookie.Value;
+                List<string> data = new List<string>();
+                //string guidCookie = cookie.Value.Split('|').FirstOrDefault();
+                dataAsString = dataAsString.Substring(dataAsString.IndexOf("|") + 1);
+                data.AddRange(dataAsString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                data.Contains(surveyId.ToString());
+                if (data.Contains(surveyId.ToString()) == true)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+
             var survey = _db.Surveys
                             .Where(s => s.Id == surveyId)
                             .Select(s => new
@@ -71,7 +87,7 @@ namespace SurveyTool.Controllers
 
             return View(survey);
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Create(int surveyId, string action, Response model)
         {
@@ -80,9 +96,31 @@ namespace SurveyTool.Controllers
                 ViewBag.Message = "Brak pytań!";
                 return View("Error");
             }
+            HttpCookie cookie = Request.Cookies.Get("resplist");
+            List<string> data = new List<string>();
+            string guidCookie = "";
+            if (cookie != null)
+            {
+                guidCookie = cookie.Value.Split('|').FirstOrDefault();
+                var cookieV = cookie.Value.Substring(cookie.Value.IndexOf("|") + 1);
+                data.AddRange(cookieV.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+            }
+            else
+            {
+                cookie = new HttpCookie("resplist");
+                guidCookie = Guid.NewGuid().ToString();
+            }
+
+            data.Add(surveyId.ToString());
+            string dataAsString = data.Aggregate((a, b) => a = a + "," + b);
+
+            cookie.Value = guidCookie + "|" + dataAsString;
+
+            Response.Cookies.Add(new HttpCookie("resplist", cookie.Value.ToString()));
+
             model.Answers = model.Answers.Where(a => !String.IsNullOrEmpty(a.Value)).ToList();
             model.SurveyId = surveyId;
-            model.CreatedBy = User.Identity.Name;
+            model.CreatedBy = User.Identity.IsAuthenticated ? User.Identity.Name : guidCookie;
             model.CreatedOn = DateTime.Now;
             _db.Responses.Add(model);
             _db.SaveChanges();
