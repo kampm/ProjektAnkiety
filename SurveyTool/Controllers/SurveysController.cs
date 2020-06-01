@@ -105,6 +105,21 @@ namespace SurveyTool.Controllers
             return RedirectToAction("Edit", new { id = model.Id });
         }
 
+        [HttpGet]
+
+        public ActionResult AddLike(int id)
+        {
+            Survey model = _db.Surveys.Find(id);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            model.Likes += 1;
+            _db.Entry(model).State = EntityState.Modified;
+            _db.SaveChanges();
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult Delete(Survey survey)
         {

@@ -20,6 +20,8 @@ namespace SurveyTool.Models
         [Display(Name = "Tytuł ankiety")]
         public string Name { get; set; }
 
+        public int Likes { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }

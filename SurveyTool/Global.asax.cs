@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using NSwag.AspNet.Owin;
 
 namespace SurveyTool
 {
@@ -13,6 +14,15 @@ namespace SurveyTool
     {
         protected void Application_Start()
         {
+            //RouteTable.Routes.MapOwinPath("swagger", app =>
+            //{
+            //    app.UseSwaggerUi3(typeof(MvcApplication).Assembly, settings =>
+            //    {
+            //        settings.MiddlewareBasePath = "/swagger";
+            //        //settings.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{id}";  //this is the default one
+            //        settings.GeneratorSettings.DefaultUrlTemplate = "{controller}/{action}/{id}";
+            //    });
+            //});
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
