@@ -81,12 +81,27 @@
                         @item.Title
                     </a>
                 </div>
-                <div id="@String.Concat("item", i)" class="accordion-body collapse">
+                <div id="@String.Concat("item", i)" class="accordion-body collapse" style="width: 600px; height: 400px;">
                     <div class="accordion-inner">
                         @Html.Raw(item.Body)
 
                     </div>
-                    <div><canvas id="@String.Concat("#item", i)" width="600" height="400"></canvas></div>
+                    <div>
+                        <ul>
+                            @if (item.Type == "Text")
+                            {
+                                foreach (var answer in @item.Answers)
+                                {
+                                    <li>
+                                        @answer.Value;
+                                    </li>
+                                }
+
+
+                            }
+                        </ul>
+                        <canvas id="@String.Concat("#item", i)" width="600" height="400"></canvas>
+                    </div>
                 </div>
             </div>
             <script>

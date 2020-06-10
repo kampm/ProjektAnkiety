@@ -98,7 +98,7 @@ namespace SurveyTool.Models
             get
             {
                 if (Type == "ABCD")
-                    return Answers.Sum(x => x.Value == "A" ? 1 : 0);
+                    return Answers.Sum(x => x.Value == "D" ? 1 : 0);
                 return 0;
             }
         }
